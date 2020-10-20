@@ -29,6 +29,7 @@ const App = () => {
     return (
         <div className="ui container">
             <LocationSearch onPreiseChange={setPreise} />
+            <div class="ui divider"></div>
             {preise.length > 0 ? (
                 <div className="ui inverted segment">
                     <div className="ui inverted relaxed divided list">

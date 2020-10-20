@@ -93,21 +93,25 @@ const LocationSearch = ({ onPreiseChange }) => {
     return (
         <div>
             <div className="ui form">
-                <label className="label">Stadt, Adresse oder PLZ:</label>
-                <input
-                    type="text"
-                    className="ui input"
-                    onChange={(e) => setCity(e.target.value)}
-                    value={city}
-                />
+                <div className="field">
+                    <label className="label">Stadt, Adresse oder PLZ:</label>
+                    <input
+                        type="text"
+                        className="ui input"
+                        onChange={(e) => setCity(e.target.value)}
+                        value={city}
+                    />
+                </div>
+
                 <Dropdown
                     options={options}
                     label="Treibstoff wählen:"
                     selected={fuel}
                     onSelectedChange={setFuel}
                 />
-                <Slider value={value} color="blue" settings={settings} />
                 <h3 className="header">Umkreis: {value} km</h3>
+                <Slider value={value} color="blue" settings={settings} />
+
                 {err ? "" : ""}
             </div>
         </div>
