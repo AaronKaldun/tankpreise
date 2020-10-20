@@ -3,9 +3,11 @@ import React, { useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import { Slider } from "react-semantic-ui-range";
 //import "semantic-ui-css/semantic.min.css";
+//key: 0622411304f2f233f6c15f2c0214c3528658f8f
 
 const LocationSearch = ({ onPreiseChange }) => {
-    const API_KEY = "d8149be7-4874-1428-b259-da5421cf17aa";
+    const tanken_API_KEY = "d8149be7-4874-1428-b259-da5421cf17aa";
+    const geo_API_KEY = "QAAAyRQGyNbTkY1VGCmBnnkHbFXq80D2";
     const options = [
         {
             label: "Diesel",
@@ -25,6 +27,7 @@ const LocationSearch = ({ onPreiseChange }) => {
     const [lng, setLng] = useState(null);
     const [err, setErr] = useState("");
     const [fuel, setFuel] = useState(options[0]);
+    const [city, setCity] = useState("");
 
     const [value, setValue] = useState(5);
 
@@ -59,7 +62,7 @@ const LocationSearch = ({ onPreiseChange }) => {
                         rad: value,
                         type: fuel.value,
                         sort: "price",
-                        apikey: API_KEY,
+                        apikey: tanken_API_KEY,
                     },
                 })
                 .then(({ data }) => {
@@ -67,9 +70,36 @@ const LocationSearch = ({ onPreiseChange }) => {
                 });
     }, [fuel, lat, lng, onPreiseChange, value]);
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (city)
+                axios
+                    .get("http://www.mapquestapi.com/geocoding/v1/address", {
+                        params: {
+                            location: city + " Deutschland",
+                            key: geo_API_KEY,
+                        },
+                    })
+                    .then(({ data }) => {
+                        setLat(data.results[0].locations[0].latLng.lat);
+                        setLng(data.results[0].locations[0].latLng.lng);
+                    });
+        }, 1500);
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [city]);
+
     return (
         <div>
             <div className="ui form">
+                <label className="label">Stadt, Adresse oder PLZ:</label>
+                <input
+                    type="text"
+                    className="ui input"
+                    onChange={(e) => setCity(e.target.value)}
+                    value={city}
+                />
                 <Dropdown
                     options={options}
                     label="Treibstoff wählen:"
@@ -78,7 +108,7 @@ const LocationSearch = ({ onPreiseChange }) => {
                 />
                 <Slider value={value} color="blue" settings={settings} />
                 <h3 className="header">Umkreis: {value} km</h3>
-                {err ? err : ""}
+                {err ? "" : ""}
             </div>
         </div>
     );
