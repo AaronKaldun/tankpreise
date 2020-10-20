@@ -5,17 +5,19 @@ const App = () => {
     const [preise, setPreise] = useState([]);
 
     const renderedResults = preise.map((preis) => {
-        return (
-            <div className="item" key={preis.id}>
-                <div className="right floated content">
-                    {preis.price} <b>€</b>
+        if (preis.price)
+            return (
+                <div className="item" key={preis.id}>
+                    <div className="right floated content">
+                        {preis.price ? preis.price.toFixed(2) : ""} <b>€</b>
+                    </div>
+                    <div className="content">
+                        <div className="header">{preis.brand}</div>
+                        {`${preis.street}, ${preis.houseNumber} - ${preis.place} | Entfernung: ${preis.dist} km`}
+                    </div>
                 </div>
-                <div className="content">
-                    <div className="header">{preis.brand}</div>
-                    {`${preis.street}, ${preis.houseNumber} - ${preis.place} | Entfernung: ${preis.dist} km`}
-                </div>
-            </div>
-        );
+            );
+        return null;
     });
 
     return (
