@@ -38,14 +38,6 @@ const LocationSearch = ({ onPreiseChange }) => {
         },
     };
 
-    const handleValueChange = (e) => {
-        let value = parseInt(e.target.value);
-        if (!value) {
-            value = 0;
-        }
-        setValue(e.target.value);
-    };
-
     useEffect(() => {
         //$(".ui.slider").slider();
         window.navigator.geolocation.getCurrentPosition(
