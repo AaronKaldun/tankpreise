@@ -8,7 +8,7 @@ const App = () => {
         return (
             <div className="item" key={preis.id}>
                 <div className="right floated content">
-                    {preis.price.toFixed(2)} <b>€</b>
+                    {preis.price} <b>€</b>
                 </div>
                 <div className="content">
                     <div className="header">{preis.brand}</div>
