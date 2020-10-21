@@ -74,7 +74,7 @@ const LocationSearch = ({ onPreiseChange }) => {
         const timeoutId = setTimeout(() => {
             if (city)
                 axios
-                    .get("http://www.mapquestapi.com/geocoding/v1/address", {
+                    .get("https://www.mapquestapi.com/geocoding/v1/address", {
                         params: {
                             location: city + " Deutschland",
                             key: geo_API_KEY,
